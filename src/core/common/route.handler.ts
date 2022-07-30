@@ -1,5 +1,6 @@
 import { Route } from "../interfaces/routeconf.interface";
 import { AppGlobals } from "./global.app";
+import { ServiceHandler } from "./service.handler";
 import { TemplateHandler } from "./template.handler";
 
 export class RouteHandler{
@@ -25,6 +26,7 @@ export class RouteHandler{
 
    changeData(href:string){
         let global = AppGlobals.getInstance();
+        let servicehandler = new ServiceHandler();
         history.pushState({}, 'newUrl', href);
 
         // use window.location.pathname to compare
@@ -41,7 +43,7 @@ export class RouteHandler{
             global.currentRoute = {
                 path: route.path,
                 pageComponent: route.pageComponent,
-                pageInstance: Reflect.construct(route.pageComponent,[]),
+                pageInstance: servicehandler.createInstance(route.pageComponent),
                 template: global.templates[componentName],
                 eventListeners:[],
                 props:{},

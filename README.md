@@ -1,10 +1,22 @@
 # TS SPA
-Just trying to understand how a SPA works.  
+Just trying to understand how a SPA works. Nothing is optimized and I am sure there will be memory leaks but good enough to understand a few concepts.  
 
-## As of now need to figure out
-1. How to set route + Page creation -- seems to be working
-2. binding -- ok for my purpose of understanding
-3. Dependency injection -- maybe soon
+## I have implemented the following
+1. How to set route + Page creation  
+2. binding  
+3. Dependency injection 
+
+  
+
+Check the **doc** folder
+
+## Files and Folders
+Entry point is the **main.ts** file  
+The main SPA files are in the **core** folder  
+The **services** and **pages** folder just show an example  
+
+### Core
+* Under *core/common/global.app.ts* contains a singleton that manages the entire app.
 
 
 ## To run

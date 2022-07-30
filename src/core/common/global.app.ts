@@ -1,4 +1,5 @@
 import { CurrentPath, Route } from "../interfaces/routeconf.interface";
+import { PageServiceMapping } from "../interfaces/service.interface";
 
 export class AppGlobals{
     /* Start Singleton setup */
@@ -21,7 +22,9 @@ export class AppGlobals{
 	/* Start template Param setup */
 	templates:any = {};
 	/* End template Param setup */
-
-
+	/* Start Services setup */
+	services:any = {};
+	pageServiceMapping:PageServiceMapping = {};
+	/* End Services setup */
 
 }

@@ -1,5 +1,7 @@
+import { inject } from "../../core/decorators/inject.decorator";
 import { PageComponent } from "../../core/decorators/page.decorator";
 import { BindableProps } from "../../core/interfaces/pageconf.interface";
+import { DataService } from "../../services/data.service";
 
 @PageComponent({
     template: `
@@ -10,13 +12,21 @@ import { BindableProps } from "../../core/interfaces/pageconf.interface";
 
         <div bind-innerHTML='title'></div>
         <input type="text" id="input-text" bind-value="title" event-input="valueTyped($event)"/>
+        <button type="button" event-click="printServiceData">Show Log</button>
         `
 })
 export class ContactPage implements BindableProps{
     bindProps= { 
         title : "Some other text"
      };
+     
+    constructor(@inject('DataService') private dataservice:DataService){}
+
      valueTyped(event:any){
         this.bindProps.title = event.target.value;
+     }
+
+     printServiceData(){
+        console.log(this.dataservice.title);
      }
 }

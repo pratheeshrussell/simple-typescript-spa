@@ -7,6 +7,10 @@ export function MainConfig(config:MainConf){
     global.routes = config.routes;
     // Assuming Element Exists
     global.rootElement = document.getElementById(config.rootElement);
+    // Instantiate services
+    config.services.forEach(service=>{
+        global.services[service.name] = Reflect.construct(service,[]);
+    });
     return function(target: any){
         // set initial route
         let router = new RouteHandler();

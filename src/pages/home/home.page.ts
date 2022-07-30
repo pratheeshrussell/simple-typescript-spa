@@ -1,5 +1,7 @@
+import { inject } from "../../core/decorators/inject.decorator";
 import { PageComponent } from "../../core/decorators/page.decorator";
 import { BindableProps } from "../../core/interfaces/pageconf.interface";
+import { DataService } from "../../services/data.service";
 
 @PageComponent({
     template: `
@@ -7,7 +9,8 @@ import { BindableProps } from "../../core/interfaces/pageconf.interface";
         <a href='/contact' data-router>Goto Contact Page</a>
         <div bind-innerHTML='getTitle()'></div>
         <input type="text" id="input-text" bind-value="title" event-input="valueTyped($event)"/>
-        <button type="button" event-click="showAlert($event,title)">Change Text</button>
+        <br>
+        <button type="button" event-click="changeMsg($event,title)">Change Text</button>
         `
 })
 export class HomePage implements BindableProps{
@@ -15,13 +18,15 @@ export class HomePage implements BindableProps{
         title : "Home Page"
     };
 
-    showAlert(e:any,msg:string){
-       console.log(msg);
+    constructor(@inject('DataService') private dataservice:DataService){}
+
+    changeMsg(e:any,msg:string){
        this.bindProps.title = 'Working!!';
     }
 
     valueTyped(e:any){
         this.bindProps.title =(e.target.value);
+        this.dataservice.title = (e.target.value);
     }
 
     getTitle(){
