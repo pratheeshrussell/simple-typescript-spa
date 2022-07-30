@@ -1,10 +1,22 @@
 export interface Route {
     path: string,
-    pageComponent: object
+    pageComponent: any
 }
 
 export interface CurrentPath extends Route {
+    pageInstance:any,
     template: string,
     eventListeners: Function[],
-    props: any[]
+    props: {
+        [key:string]:string
+    },
+    bindings:{
+        [key:string]:BindingsObj[]
+    }
+}
+
+export interface BindingsObj{
+    element:Element,
+    attribute:string,
+    func?:string
 }

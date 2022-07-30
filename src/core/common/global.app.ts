@@ -16,7 +16,7 @@ export class AppGlobals{
 	/* Start Route Param setup */
 	rootElement:HTMLElement|null = null;
 	routes:Route[] = [];
-	currentRoute:CurrentPath|null = null;
+	currentRoute!:CurrentPath;
 	/* End Route Param setup */
 	/* Start template Param setup */
 	templates:any = {};

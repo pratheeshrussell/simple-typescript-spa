@@ -1,5 +1,6 @@
 import { Route } from "../interfaces/routeconf.interface";
 import { AppGlobals } from "./global.app";
+import { TemplateHandler } from "./template.handler";
 
 export class RouteHandler{
     initialize(){
@@ -37,19 +38,26 @@ export class RouteHandler{
            let componentName = (route.pageComponent as any).name;
            if(global.rootElement != null){
             /* Reset currentRoute Object */
-            global.currentRoute = null;
             global.currentRoute = {
                 path: route.path,
                 pageComponent: route.pageComponent,
+                pageInstance: Reflect.construct(route.pageComponent,[]),
                 template: global.templates[componentName],
                 eventListeners:[],
-                props:[]
+                props:{},
+                bindings:{}
             }
             /* ======================== */
             global.rootElement.innerHTML = global.currentRoute.template;
-            this.changeAnchorListeners();
+            this.processTemplate();
            }          
         }
+   }
+
+   processTemplate(){
+    let templateHandler = new TemplateHandler();
+    this.changeAnchorListeners();
+    templateHandler.findBindings();
    }
 
    changeAnchorListeners(){
@@ -59,7 +67,7 @@ export class RouteHandler{
             this.routerHandler(e);
           });
         
-      })
+      });
    }
 
 }
