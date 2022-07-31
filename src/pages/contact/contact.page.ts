@@ -22,6 +22,14 @@ export class ContactPage implements BindableProps{
      
     constructor(@inject('DataService') private dataservice:DataService){}
 
+    onInit(){
+      console.log('Contact page initialized');
+    }
+
+    onDestroy(): void {
+      console.log('Contact page destroyed');
+   }
+
      valueTyped(event:any){
         this.bindProps.title = event.target.value;
      }

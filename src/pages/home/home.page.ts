@@ -1,5 +1,6 @@
 import { inject } from "../../core/decorators/inject.decorator";
 import { PageComponent } from "../../core/decorators/page.decorator";
+import { AfterInit, onChangeDetected, onDestroy, onInit } from "../../core/interfaces/lifecycle.interface";
 import { BindableProps } from "../../core/interfaces/pageconf.interface";
 import { DataService } from "../../services/data.service";
 
@@ -13,10 +14,24 @@ import { DataService } from "../../services/data.service";
         <button type="button" event-click="changeMsg($event,title)">Change Text</button>
         `
 })
-export class HomePage implements BindableProps{
+export class HomePage implements BindableProps,onInit,AfterInit,onDestroy,onChangeDetected {
     bindProps={
         title : "Home Page"
     };
+    onInit(){
+        console.log('Home onInit');
+    }
+
+    AfterInit(){
+        console.log('Home AfterInit');
+    }
+    onDestroy(): void {
+        console.log('Home onDestroy');
+    }
+    onChangeDetected(key:string, value:any, newValue: any){
+        console.log('onChangeDetected');
+        console.log(key, ' is being changed from ' ,value, ' to ', newValue);
+    }
 
     constructor(@inject('DataService') private dataservice:DataService){}
 

@@ -3,10 +3,10 @@ Just trying to understand how a SPA works. Nothing is optimized and I am sure th
 
 ## I have implemented the following
 1. How to set route + Page creation  
-2. binding  
+2. binding (only simple key values,no nested items)  
 3. Dependency injection 
 
-  
+A few lifecycle events are also available  
 
 Check the **doc** folder
 

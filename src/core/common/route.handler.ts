@@ -1,5 +1,6 @@
 import { Route } from "../interfaces/routeconf.interface";
 import { AppGlobals } from "./global.app";
+import { LifeCycleHandler } from "./lifeCycle.handler";
 import { ServiceHandler } from "./service.handler";
 import { TemplateHandler } from "./template.handler";
 
@@ -27,7 +28,10 @@ export class RouteHandler{
    changeData(href:string){
         let global = AppGlobals.getInstance();
         let servicehandler = new ServiceHandler();
+        let lifeCycleHandler = new LifeCycleHandler();
         history.pushState({}, 'newUrl', href);
+        /* Run Destroy hook */
+        lifeCycleHandler.runOnDestroy();
 
         // use window.location.pathname to compare
         // else it is considering from http://domain/
@@ -39,6 +43,8 @@ export class RouteHandler{
            // Seriously?? the worst type casting ever!!
            let componentName = (route.pageComponent as any).name;
            if(global.rootElement != null){
+
+
             /* Reset currentRoute Object */
             global.currentRoute = {
                 path: route.path,
@@ -50,7 +56,13 @@ export class RouteHandler{
                 bindings:{}
             }
             /* ======================== */
-            global.rootElement.innerHTML = global.currentRoute.template;
+            /* Run Init hook */
+            lifeCycleHandler.runOnInit();
+            /* Render the template */
+            global.rootElement.innerHTML = global.currentRoute.template;       
+            /* Run AfterInit hook */
+            lifeCycleHandler.runAfterInit();
+            /* Start Process Template */
             this.processTemplate();
            }          
         }

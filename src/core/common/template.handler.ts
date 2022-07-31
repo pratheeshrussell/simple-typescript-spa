@@ -1,11 +1,13 @@
 import { AppGlobals } from "./global.app";
+import { LifeCycleHandler } from "./lifeCycle.handler";
 import { AppSupport } from "./support.app";
 
 export class TemplateHandler {
-    global;
+    global;lifeCycleHandler;
     functionBindingKey = '$functionBinding$';
     constructor() {
         this.global = AppGlobals.getInstance();
+        this.lifeCycleHandler = new LifeCycleHandler();
     }
 
     findBindings() {
@@ -60,11 +62,13 @@ export class TemplateHandler {
     }
 
     convertPropsToProxy() {
+        
         if (Reflect.has(this.global.currentRoute.pageInstance, 'bindProps')) {
             let that = this;
             this.global.currentRoute.pageInstance.bindProps = new Proxy
             (this.global.currentRoute.pageInstance.bindProps, {
                 set(target,key,value){
+                    that.lifeCycleHandler.runOnChangeDetected(key.toString(),target[key],value);
                     target[key] = value;
                     that.changeDetected(key.toString());
                     return true;
